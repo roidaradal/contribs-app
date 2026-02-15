@@ -6,8 +6,7 @@ const devsDisplay = computed(() => {
     if(store.devs.startsWith('@')) {
         return store.devs
     } else {
-        const count = store.devs.split(',').filter(dev => dev.trim() != '').length;
-        return `${count} devs`
+        return `${store.devs_list.length} devs`
     }
 });
 </script>
