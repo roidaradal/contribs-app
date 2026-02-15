@@ -8,24 +8,23 @@ const apiURL = import.meta.env.VITE_API_URL;
 const url = `${apiURL}/contribs/${store.input_date}?devs=${store.devs_url}`;
 const data: Ref<Nullable<DevContribs>> = ref(null);
 
-onMounted(async () => {
-    const resp = await fetch(url);
-    const body = await resp.text();
-    const result: DataResult<Nullable<DevContribs>> = JSON.parse(body);
-    data.value = result.data;
-});
+// onMounted(async () => {
+//     const resp = await fetch(url);
+//     const body = await resp.text();
+//     const result: DataResult<Nullable<DevContribs>> = JSON.parse(body);
+//     data.value = result.data;
+// });
 </script>
 
 <template>
 <p v-if="data !== null">
     {{  JSON.stringify(data) }}
 </p>
+<input id="devs" type="text" v-model="store.devs" />
 </template>
 
 <style scoped>
-p {
-    width: 90%;
-    border: 1px solid black;
-    background-color: #BED;
-}
+    #devs {
+        float: right;
+    }
 </style>
