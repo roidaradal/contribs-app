@@ -11,3 +11,8 @@ export type DevContribs = {
     date: string
     contribs: {[key: string]: MonthContribs}
 };
+
+export type Week = {
+    index: number, 
+    name: string,
+};

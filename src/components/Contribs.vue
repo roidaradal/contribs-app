@@ -2,10 +2,13 @@
 import type { DataResult, DevContribs, Nullable } from '@/data/types';
 import { useGlobalStore } from '@/stores/store';
 import { onMounted, ref, type Ref } from 'vue';
+import Sidebar from './Sidebar.vue';
+import SummaryPage from './SummaryPage.vue';
+import WeekPage from './WeekPage.vue';
 
 const store = useGlobalStore();
 const apiURL = import.meta.env.VITE_API_URL;
-const url = `${apiURL}/contribs/${store.input_date}?devs=${store.devs_url}`;
+const url = `${apiURL}/contribs/${store.inputDate}?devs=${store.devsURL}`;
 const data: Ref<Nullable<DevContribs>> = ref(null);
 
 // onMounted(async () => {
@@ -17,14 +20,50 @@ const data: Ref<Nullable<DevContribs>> = ref(null);
 </script>
 
 <template>
-<p v-if="data !== null">
+<!-- <p v-if="data !== null">
     {{  JSON.stringify(data) }}
-</p>
-<input id="devs" type="text" v-model="store.devs" />
+</p> -->
+<div id="main-box">
+    <div id="sidebar-box">
+        <Sidebar />
+    </div>
+    <div id="content-box">
+        <h2>{{ store.inputMonthString }} GitHub Contributions</h2>
+        <div
+            :class="{ hidden : store.currentTab != 'summary' }"
+        >
+            <SummaryPage />
+        </div>
+        <div 
+            v-for="week of store.weeks"
+            :class="{ hidden : store.currentTab != week.index.toString() }"
+        >
+            <WeekPage :week="week.index" />
+        </div>
+    </div>
+</div>
+
+<!-- <div id="devs-input">
+    <input type="text" v-model="store.devs" />
+</div> -->
 </template>
 
 <style scoped>
-    #devs {
-        float: right;
+    #main-box {
+        display: flex;
+    }
+    #sidebar-box {
+        width: 12em;
+    }
+    #content-box {
+        padding-top: 0.5em;
+    }
+    #devs-input {
+        position: absolute;
+        top: 3em; right: 0;
+    }
+    h2 {
+        font-size: 1.5em;
+        margin-bottom: 1em;
     }
 </style>

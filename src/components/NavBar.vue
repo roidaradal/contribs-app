@@ -7,7 +7,7 @@ const devsDisplay = computed(() => {
     if(store.devs.startsWith('@')) {
         return store.devs
     } else {
-        const count = store.devs_list.length;
+        const count = store.devsList.length;
         return `${count} dev${count == 1 ? '' : 's'}`
     }
 });
@@ -23,7 +23,10 @@ const devsDisplay = computed(() => {
         </div>
         <div id="settings-box">
             <div id="date-box">
-                <input type="date" v-model="store.input_date"  />
+                <input type="date" 
+                    @change="store.resetCurrentTab"
+                    v-model="store.inputDate"  
+                />
             </div>
             <div id="devs-box">
                 <p>{{ devsDisplay }}</p>
@@ -34,10 +37,8 @@ const devsDisplay = computed(() => {
 
 <style lang="scss" scoped>
     #nav-bar {
-        margin: 0; padding: 0;
         background-color: #BEB;
         display: flex;
-        height: 3em;
 
         #title-box {
             flex: 0 0 25%;
