@@ -2,6 +2,7 @@
 import type { DataResult, DevContribs, Nullable } from '@/data/types';
 import { useGlobalStore } from '@/stores/store';
 import { onMounted, ref, type Ref } from 'vue';
+import Sidebar from './Sidebar.vue';
 
 const store = useGlobalStore();
 const apiURL = import.meta.env.VITE_API_URL;
@@ -17,10 +18,17 @@ const data: Ref<Nullable<DevContribs>> = ref(null);
 </script>
 
 <template>
-<p v-if="data !== null">
+<!-- <p v-if="data !== null">
     {{  JSON.stringify(data) }}
-</p>
-<p>{{ store.monthWeeks }}</p>
+</p> -->
+<div id="main-box">
+    <div id="sidebar-box">
+        <Sidebar />
+    </div>
+    <div id="content-box">
+        <p>{{ store.monthWeeks }}</p>
+    </div>
+</div>
 
 <div id="devs-input">
     <input type="text" v-model="store.devs" />
@@ -28,6 +36,12 @@ const data: Ref<Nullable<DevContribs>> = ref(null);
 </template>
 
 <style scoped>
+    #main-box {
+        display: flex;
+    }
+    #sidebar-box {
+        width: 12em;
+    }
     #devs-input {
         position: absolute;
         top: 3em; right: 0;

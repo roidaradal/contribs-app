@@ -1,3 +1,4 @@
+import type { Week } from "@/data/types";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue"; 
 import type { ComputedRef, Ref } from "vue";
@@ -6,12 +7,12 @@ export const useGlobalStore = defineStore('global', () => {
     // Date info
     const inputDate: Ref<string> = ref(new Date().toISOString().slice(0, 10)); // YYYY-MM-DD has 10 characters
     const inputMonth: ComputedRef<string> = computed(() => inputDate.value.slice(0, 7)); // YYYY-MM has 7 chars
-    const monthWeeks: ComputedRef<Number[][]> = computed(() => {
+    const monthWeeks: ComputedRef<number[][]> = computed(() => {
         const [yearPart, monthPart] = inputMonth.value.split('-');
         if(yearPart === undefined || monthPart === undefined) return [];
         
-        const weeks: Number[][] = [];
-        let week: Number[] = [];
+        const weeks: number[][] = [];
+        let week: number[] = [];
 
         const [year, month] = [+yearPart, +monthPart];
         const monthIndex = month-1;
@@ -45,6 +46,17 @@ export const useGlobalStore = defineStore('global', () => {
         }
         return weeks;
     });
+    const weeks: ComputedRef<Week[]> = computed(() => {
+        const weeks: Week[] = [];
+        monthWeeks.value.forEach((week, i) => {
+            if(week.reduce((total, day) => total + day, 0) == 0) return;
+            weeks.push({
+                index: i,
+                name: `Week ${i}`, 
+            });
+        })
+        return weeks;
+    });
 
 
     // Devs info
@@ -57,7 +69,7 @@ export const useGlobalStore = defineStore('global', () => {
     });
 
     return { 
-        inputDate, inputMonth, monthWeeks, 
+        inputDate, inputMonth, monthWeeks, weeks,
         devs, devsList, devsURL,
     }
 })
