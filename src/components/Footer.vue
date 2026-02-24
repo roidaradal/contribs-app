@@ -1,6 +1,5 @@
 <template>
     <div id="footer">
-        
         <p>
             <img class="logo" alt="logo" title="GitHub Contribs" src="@/assets/logo.png" /> | 
             <a href="https://github.com/roidaradal">@roidaradal</a> | 
@@ -11,9 +10,8 @@
 
 <style scoped>
     #footer {
-        padding-top: 1em;
+        padding: 1em 0 0.5em;
         text-align: center;
-        clear: both;
         
         a, a:visited, a:hover, a:active {
             color: green;

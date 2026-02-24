@@ -6,7 +6,12 @@ const store = useGlobalStore();
 
 <template>
     <button>Summary</button>
-    <button v-for="week of store.weeks">{{ week.name }}</button>
+    <button v-for="week of store.weeks">
+        {{ week.name }}
+    </button>
+    <p v-if="store.isCurrentMonth">
+        {{ store.daysLeft }} day{{ store.daysLeft == 1 ? '' : 's' }} left
+    </p>
 </template>
 
 <style scoped>
@@ -18,5 +23,9 @@ const store = useGlobalStore();
     }
     button:hover {
         cursor: pointer;
+    }
+    p {
+        margin-top: 1em;
+        text-align: center;
     }
 </style>

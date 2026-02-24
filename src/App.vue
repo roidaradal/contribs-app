@@ -5,10 +5,16 @@ import Footer from './components/Footer.vue';
 </script>
 
 <template>
-    <NavBar />
-    <Contribs />
-    <Footer />
+    <header><NavBar /></header>
+    <main><Contribs /></main>
+    <footer><Footer /></footer>
 </template>
 
 <style scoped>
+    header {
+        height: 3em;
+    }
+    main {
+        flex: 1;
+    }
 </style>

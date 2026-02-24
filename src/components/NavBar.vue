@@ -34,10 +34,8 @@ const devsDisplay = computed(() => {
 
 <style lang="scss" scoped>
     #nav-bar {
-        margin: 0; padding: 0;
         background-color: #BEB;
         display: flex;
-        height: 3em;
 
         #title-box {
             flex: 0 0 25%;

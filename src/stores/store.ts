@@ -57,6 +57,14 @@ export const useGlobalStore = defineStore('global', () => {
         })
         return weeks;
     });
+    const isCurrentMonth: ComputedRef<boolean> = computed(() => inputMonth.value == new Date().toISOString().slice(0,7));
+    const daysLeft: ComputedRef<number> = computed(() => {
+        if(!isCurrentMonth.value) return 0;
+        const today = new Date();
+        const lastDate = new Date(today.getFullYear(), today.getMonth()+1, 0).getDate();
+        console.log(lastDate, today.getMonth());
+        return lastDate - today.getDate();
+    });
 
 
     // Devs info
@@ -70,6 +78,7 @@ export const useGlobalStore = defineStore('global', () => {
 
     return { 
         inputDate, inputMonth, monthWeeks, weeks,
+        isCurrentMonth, daysLeft,
         devs, devsList, devsURL,
     }
 })
