@@ -1,15 +1,63 @@
 import { defineStore } from "pinia";
-import { computed, ref, type ComputedRef } from "vue";
+import { computed, ref } from "vue"; 
+import type { ComputedRef, Ref } from "vue";
 
 export const useGlobalStore = defineStore('global', () => {
-    const input_date = ref(new Date().toISOString().slice(0, 10))
-    const devs = ref('@goodapps')
-    const devs_list: ComputedRef<string[]> = computed(() => {
-        return devs.value.split(',').map(dev => dev.trim()).filter(dev => dev != '')
-    });
-    const devs_url: ComputedRef<string> = computed(() => {
-        return devs_list.value.join(',')
+    // Date info
+    const inputDate: Ref<string> = ref(new Date().toISOString().slice(0, 10)); // YYYY-MM-DD has 10 characters
+    const inputMonth: ComputedRef<string> = computed(() => inputDate.value.slice(0, 7)); // YYYY-MM has 7 chars
+    const monthWeeks: ComputedRef<Number[][]> = computed(() => {
+        const [yearPart, monthPart] = inputMonth.value.split('-');
+        if(yearPart === undefined || monthPart === undefined) return [];
+        
+        const weeks: Number[][] = [];
+        let week: Number[] = [];
+
+        const [year, month] = [+yearPart, +monthPart];
+        const monthIndex = month-1;
+        const firstDay = new Date(year, monthIndex, 1).getDay(); // day of the week index
+        const lastDate = new Date(year, monthIndex+1, 0).getDate();
+        let currDate = 1;
+
+        // Week 0
+        if (firstDay == 0) {
+            // No week 0
+            week = Array(7).fill(0);
+            weeks.push(week);
+        } else {
+            currDate = 7-firstDay;
+            week = Array(firstDay).fill(0);
+            for(let day = 1; day <= currDate; day++) week.push(day);
+            weeks.push(week);
+            currDate += 1;
+        }
+        // Process full weeks
+        for(; currDate + 6 <= lastDate; currDate += 7) {
+            week = [];
+            for(let d = currDate; d < currDate+7; d++) week.push(d);
+            weeks.push(week);
+        }
+        // Last week
+        if (currDate <= lastDate) {
+            week = Array(7).fill(0);
+            for(let i = 0; i <= lastDate-currDate; i++) week[i] = currDate+i;
+            weeks.push(week);
+        }
+        return weeks;
     });
 
-    return { input_date, devs, devs_list, devs_url }
+
+    // Devs info
+    const devs: Ref<string> = ref('@goodapps')
+    const devsList: ComputedRef<string[]> = computed(() => {
+        return devs.value.split(',').map(dev => dev.trim()).filter(dev => dev != '')
+    });
+    const devsURL: ComputedRef<string> = computed(() => {
+        return devsList.value.join(',')
+    });
+
+    return { 
+        inputDate, inputMonth, monthWeeks, 
+        devs, devsList, devsURL,
+    }
 })

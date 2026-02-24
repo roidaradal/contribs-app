@@ -4,7 +4,7 @@
         <p>
             <img class="logo" alt="logo" title="GitHub Contribs" src="@/assets/logo.png" /> | 
             <a href="https://github.com/roidaradal">@roidaradal</a> | 
-            2026
+            {{ new Date().getFullYear() }}
         </p>
     </div>
 </template>
