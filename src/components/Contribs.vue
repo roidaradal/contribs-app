@@ -3,6 +3,8 @@ import type { DataResult, DevContribs, Nullable } from '@/data/types';
 import { useGlobalStore } from '@/stores/store';
 import { onMounted, ref, type Ref } from 'vue';
 import Sidebar from './Sidebar.vue';
+import SummaryPage from './SummaryPage.vue';
+import WeekPage from './WeekPage.vue';
 
 const store = useGlobalStore();
 const apiURL = import.meta.env.VITE_API_URL;
@@ -26,7 +28,17 @@ const data: Ref<Nullable<DevContribs>> = ref(null);
         <Sidebar />
     </div>
     <div id="content-box">
-        <p>{{ store.monthWeeks }}</p>
+        <div
+            :class="{ hidden : store.currentTab != 'summary' }"
+        >
+            <SummaryPage />
+        </div>
+        <div 
+            v-for="week of store.weeks"
+            :class="{ hidden : store.currentTab != week.index.toString() }"
+        >
+            <WeekPage :week="week.index" />
+        </div>
     </div>
 </div>
 

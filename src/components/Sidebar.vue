@@ -2,13 +2,20 @@
 import { useGlobalStore } from '@/stores/store';
 
 const store = useGlobalStore();
+const changeTab = (newTab: string) => store.currentTab = newTab;
 </script>
 
 <template>
-    <button>Summary</button>
+    <button
+        :class="{ active: store.currentTab == 'summary' }" 
+        @click="changeTab('summary')"
+    >
+        Summary
+    </button>
     <button 
         v-for="week of store.weeks"
         :class="{ active : store.currentTab == week.index.toString()}"
+        @click="changeTab(week.index.toString())"
     >
         {{ week.name }}
     </button>
