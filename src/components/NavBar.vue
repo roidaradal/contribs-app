@@ -23,7 +23,10 @@ const devsDisplay = computed(() => {
         </div>
         <div id="settings-box">
             <div id="date-box">
-                <input type="date" v-model="store.inputDate"  />
+                <input type="date" 
+                    @change="store.resetCurrentTab"
+                    v-model="store.inputDate"  
+                />
             </div>
             <div id="devs-box">
                 <p>{{ devsDisplay }}</p>

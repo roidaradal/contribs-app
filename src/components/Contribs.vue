@@ -30,9 +30,9 @@ const data: Ref<Nullable<DevContribs>> = ref(null);
     </div>
 </div>
 
-<div id="devs-input">
+<!-- <div id="devs-input">
     <input type="text" v-model="store.devs" />
-</div>
+</div> -->
 </template>
 
 <style scoped>

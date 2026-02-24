@@ -6,7 +6,10 @@ const store = useGlobalStore();
 
 <template>
     <button>Summary</button>
-    <button v-for="week of store.weeks">
+    <button 
+        v-for="week of store.weeks"
+        :class="{ active : store.currentTab == week.index.toString()}"
+    >
         {{ week.name }}
     </button>
     <p v-if="store.isCurrentMonth">
@@ -20,9 +23,14 @@ const store = useGlobalStore();
         width: 10em;
         margin: 1em auto; 
         padding: 5px;
-    }
-    button:hover {
-        cursor: pointer;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &.active {
+            background-color: #BEB;
+        }
     }
     p {
         margin-top: 1em;

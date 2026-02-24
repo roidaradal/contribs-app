@@ -66,6 +66,16 @@ export const useGlobalStore = defineStore('global', () => {
         return lastDate - today.getDate();
     });
 
+    const currentWeek: ComputedRef<number> = computed(() => {
+        const currDate = +inputDate.value.slice(8, 10);
+        for( const [index, week] of monthWeeks.value.entries()) {
+            if(week.includes(currDate)) return index;
+        }
+        return -1;
+    });
+    const currentTab: Ref<string> = ref(`${currentWeek.value}`);
+    const resetCurrentTab = () => currentTab.value = `${currentWeek.value}`;
+
 
     // Devs info
     const devs: Ref<string> = ref('@goodapps')
@@ -78,7 +88,7 @@ export const useGlobalStore = defineStore('global', () => {
 
     return { 
         inputDate, inputMonth, monthWeeks, weeks,
-        isCurrentMonth, daysLeft,
+        isCurrentMonth, daysLeft, currentTab, resetCurrentTab,
         devs, devsList, devsURL,
     }
 })
