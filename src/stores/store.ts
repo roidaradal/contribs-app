@@ -7,6 +7,12 @@ export const useGlobalStore = defineStore('global', () => {
     // Date info
     const inputDate: Ref<string> = ref(new Date().toISOString().slice(0, 10)); // YYYY-MM-DD has 10 characters
     const inputMonth: ComputedRef<string> = computed(() => inputDate.value.slice(0, 7)); // YYYY-MM has 7 chars
+    const inputMonthString: ComputedRef<string> = computed(() => {
+        const d = new Date(`${inputMonth.value}-01`);
+        const monthName = d.toLocaleString('default', {month: 'long'});
+        const year = d.getFullYear();
+        return `${monthName} ${year}`;
+    });
     const monthWeeks: ComputedRef<number[][]> = computed(() => {
         const [yearPart, monthPart] = inputMonth.value.split('-');
         if(yearPart === undefined || monthPart === undefined) return [];
@@ -87,7 +93,7 @@ export const useGlobalStore = defineStore('global', () => {
     });
 
     return { 
-        inputDate, inputMonth, monthWeeks, weeks,
+        inputDate, inputMonth, inputMonthString, monthWeeks, weeks,
         isCurrentMonth, daysLeft, currentTab, resetCurrentTab,
         devs, devsList, devsURL,
     }

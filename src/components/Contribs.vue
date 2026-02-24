@@ -28,6 +28,7 @@ const data: Ref<Nullable<DevContribs>> = ref(null);
         <Sidebar />
     </div>
     <div id="content-box">
+        <h2>{{ store.inputMonthString }} GitHub Contributions</h2>
         <div
             :class="{ hidden : store.currentTab != 'summary' }"
         >
@@ -54,8 +55,15 @@ const data: Ref<Nullable<DevContribs>> = ref(null);
     #sidebar-box {
         width: 12em;
     }
+    #content-box {
+        padding-top: 0.5em;
+    }
     #devs-input {
         position: absolute;
         top: 3em; right: 0;
+    }
+    h2 {
+        font-size: 1.5em;
+        margin-bottom: 1em;
     }
 </style>
