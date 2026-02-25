@@ -84,6 +84,11 @@ const getWidth = (total: number): string => {
         </thead>
         <tbody>
             <tr
+                v-if="store.devContribs === null"
+            >
+                <td class="center" colspan="10">Loading data...</td>
+            </tr>
+            <tr
                 v-for="devTotal in devTotals"
             >
                 <td class="dev">{{ devTotal.dev }}</td>

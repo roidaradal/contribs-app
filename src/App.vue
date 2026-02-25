@@ -8,7 +8,7 @@ import { onMounted } from 'vue';
 
 onMounted(async () => {
     const store = useGlobalStore();
-    store.devContribs = await fetchDevContribs(store.inputDate, store.devsURL);
+    store.devContribs = await fetchDevContribs(store.inputDate, store.devsURL, false);
 })
 </script>
 
