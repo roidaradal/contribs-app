@@ -11,6 +11,10 @@ const devsDisplay = computed(() => {
         return `${count} dev${count == 1 ? '' : 's'}`
     }
 });
+
+const changeDate = () => {
+    store.resetCurrentTab();
+};
 </script>
 
 <template>
@@ -23,10 +27,11 @@ const devsDisplay = computed(() => {
         </div>
         <div id="settings-box">
             <div id="date-box">
-                <input type="date" 
-                    @change="store.resetCurrentTab"
+                <!-- <input type="date" 
+                    @change="changeDate"
                     v-model="store.inputDate"  
-                />
+                /> -->
+                <p> {{ store.inputDate }}</p>
             </div>
             <div id="devs-box">
                 <p>{{ devsDisplay }}</p>
@@ -64,7 +69,7 @@ const devsDisplay = computed(() => {
                 margin: 0.75em auto;
                 font-size: 1.25em;
             }
-            #devs-box p {
+            p {
                 font-weight: bold;
                 margin: 0.5em 1em;
                 font-size: 1.25em;

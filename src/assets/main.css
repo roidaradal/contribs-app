@@ -23,5 +23,32 @@ table {
 th, td {
     border-bottom: 1px solid black;
     border-right: 1px solid black;
-    padding: 10px;
+    padding: 5px;
+}
+
+td.level0 {
+    background-color: #151b23; 
+    color: #151b23;
+}
+
+td.level1 {
+    background-color: #033a16; 
+    color: white;
+}
+
+td.level2 {
+    background-color: #196c2e;
+}
+
+td.level3 {
+    background-color: #2ea043;
+}
+
+td.level4 {
+    background-color: #56d364;
+}
+
+td.center {
+    text-align: center;
+    font-weight: bold;
 }
