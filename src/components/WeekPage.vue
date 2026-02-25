@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { fetchDevContribs } from '@/data/fetch';
 import type { DevTotal } from '@/data/types';
 import { useGlobalStore } from '@/stores/store';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 const props = defineProps({
     week: {
@@ -62,6 +63,15 @@ const getWidth = (total: number): string => {
     return `${ratio.toFixed(2)}%`;
 };
 
+let isLoading = ref(false);
+
+const forceReload = async () => {
+    isLoading.value = true;
+    store.devContribs = null;
+    store.devContribs = await fetchDevContribs(store.inputDate, store.devsURL, true);
+    isLoading.value = false;
+};
+
 </script>
 
 <template>
@@ -106,6 +116,13 @@ const getWidth = (total: number): string => {
             </tr>
         </tbody>
     </table>
+    
+    <button 
+        :disabled="isLoading"
+        @click="forceReload"
+    >
+        Force Reload
+    </button>
 </template>
 
 <style scoped>
@@ -124,5 +141,8 @@ td.bar {
         background-color: green;
         height: 100%;
     }
+}
+button {
+    margin-top: 1em;
 }
 </style>
