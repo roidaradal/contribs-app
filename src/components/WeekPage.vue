@@ -41,17 +41,27 @@ let devTotals = computed(() => {
 });
 
 const getClass = (dev: string, day: number): string => {
-    if(day == 0) return 'level0';
+    if(day == 0) return '';
     if(store.devContribs === null) return '';
     const level = store.devContribs.contribs[dev]?.[day.toString()]?.[1].toString() || '';
     return `level${level}`;
 };
 
-const getCount = (dev: string, day: number): number => {
-    if(day == 0) return 0;
-    if(store.devContribs === null) return 0;
-    return store.devContribs.contribs[dev]?.[day.toString()]?.[0] || 0;
+const getCount = (dev: string, day: number): string => {
+    if(day == 0) return '';
+    if(store.devContribs === null) return '';
+    const count = store.devContribs.contribs[dev]?.[day.toString()]?.[0] || 0;
+    return count == 0 ? '' : count.toString();
 };
+
+const getWidth = (total: number): string => {
+    if(devTotals.value.length == 0) return '0%';
+    const denominator = devTotals.value[0]?.total || 0;
+    if(denominator == 0) return '0%';
+    const ratio = (total * 100) / denominator;
+    return `${ratio.toFixed(2)}%`;
+};
+
 </script>
 
 <template>
@@ -82,10 +92,32 @@ const getCount = (dev: string, day: number): number => {
                     :class="getClass(devTotal.dev, day)"
                     class="center"
                 >
-                    {{  getCount(devTotal.dev, day) }}
+                    {{ getCount(devTotal.dev, day) }}
                 </td>
                 <th class="total"> {{ devTotal.total }}</th>
+                <td class="bar">
+                    <div :style="{ width: getWidth(devTotal.total) }">&nbsp;</div>
+                </td>
             </tr>
         </tbody>
     </table>
 </template>
+
+<style scoped>
+th.day {
+    min-width: 2em;
+}
+th.total {
+    min-width: 3em;
+}
+td.dev {
+    padding: 0 1em;
+}
+td.bar {
+    min-width: 300px;
+    div {
+        background-color: green;
+        height: 100%;
+    }
+}
+</style>

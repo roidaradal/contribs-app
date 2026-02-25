@@ -48,17 +48,7 @@ td.level4 {
     background-color: #56d364;
 }
 
-th.day {
-    min-width: 2em;
-}
-
-th.total {
-    min-width: 3em;
-}
 td.center {
     text-align: center;
     font-weight: bold;
-}
-td.dev {
-    padding: 0 1em;
 }
