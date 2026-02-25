@@ -1,4 +1,4 @@
-import type { Week } from "@/data/types";
+import type { DevContribs, Nullable, Week } from "@/data/types";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue"; 
 import type { ComputedRef, Ref } from "vue";
@@ -68,7 +68,6 @@ export const useGlobalStore = defineStore('global', () => {
         if(!isCurrentMonth.value) return 0;
         const today = new Date();
         const lastDate = new Date(today.getFullYear(), today.getMonth()+1, 0).getDate();
-        console.log(lastDate, today.getMonth());
         return lastDate - today.getDate();
     });
 
@@ -91,10 +90,11 @@ export const useGlobalStore = defineStore('global', () => {
     const devsURL: ComputedRef<string> = computed(() => {
         return devsList.value.join(',')
     });
+    const devContribs: Ref<Nullable<DevContribs>> = ref(null);
 
     return { 
         inputDate, inputMonth, inputMonthString, monthWeeks, weeks,
         isCurrentMonth, daysLeft, currentTab, resetCurrentTab,
-        devs, devsList, devsURL,
+        devs, devsList, devsURL, devContribs,
     }
 })

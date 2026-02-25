@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { DevTotal } from '@/data/types';
 import { useGlobalStore } from '@/stores/store';
 import { computed } from 'vue';
 
@@ -19,6 +20,25 @@ const dayAtIndex = (index: number): string => {
     if(day == 0) return '&nbsp;'
     return day.toString().padStart(2, '0');
 };
+
+let devTotals = computed(() => {
+    if(store.devContribs === null) return [];
+    let first = +firstDay.value;
+    let last  = +lastDay.value;
+    const devTotals: DevTotal[] = [];
+    for(let dev in store.devContribs.contribs) {
+        let total = 0;
+        for(let d = first; d <= last; d++) {
+            total  += store.devContribs.contribs[dev]?.[d.toString()]?.[0] || 0
+        }
+        devTotals.push({
+            dev: dev,
+            total: total,
+        });
+    }
+    devTotals.sort((a, b) => b.total - a.total);
+    return devTotals;
+});
 </script>
 
 <template>
@@ -39,4 +59,5 @@ const dayAtIndex = (index: number): string => {
             </tr>
         </thead>
     </table>
+    <p> {{  devTotals }}</p>
 </template>

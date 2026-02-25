@@ -6,12 +6,12 @@ const changeTab = (newTab: string) => store.currentTab = newTab;
 </script>
 
 <template>
-    <button
+    <!---<button
         :class="{ active: store.currentTab == 'summary' }" 
         @click="changeTab('summary')"
     >
         Summary
-    </button>
+    </button>-->
     <button 
         v-for="week of store.weeks"
         :class="{ active : store.currentTab == week.index.toString()}"

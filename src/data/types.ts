@@ -16,3 +16,8 @@ export type Week = {
     index: number, 
     name: string,
 };
+
+export type DevTotal = {
+    dev: string, 
+    total: number,
+};
