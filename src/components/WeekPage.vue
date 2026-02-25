@@ -39,6 +39,19 @@ let devTotals = computed(() => {
     devTotals.sort((a, b) => b.total - a.total);
     return devTotals;
 });
+
+const getClass = (dev: string, day: number): string => {
+    if(day == 0) return 'level0';
+    if(store.devContribs === null) return '';
+    const level = store.devContribs.contribs[dev]?.[day.toString()]?.[1].toString() || '';
+    return `level${level}`;
+};
+
+const getCount = (dev: string, day: number): number => {
+    if(day == 0) return 0;
+    if(store.devContribs === null) return 0;
+    return store.devContribs.contribs[dev]?.[day.toString()]?.[0] || 0;
+};
 </script>
 
 <template>
@@ -50,6 +63,7 @@ let devTotals = computed(() => {
             <tr>
                 <th>Devs</th>
                 <th
+                    class="day"
                     v-for="(dayName, index) in dayNames"
                 >
                     {{ dayName }} <br/>
@@ -58,6 +72,20 @@ let devTotals = computed(() => {
                 <th colspan="2">Total</th>
             </tr>
         </thead>
+        <tbody>
+            <tr
+                v-for="devTotal in devTotals"
+            >
+                <td class="dev">{{ devTotal.dev }}</td>
+                <td
+                    v-for="day in days"
+                    :class="getClass(devTotal.dev, day)"
+                    class="center"
+                >
+                    {{  getCount(devTotal.dev, day) }}
+                </td>
+                <th class="total"> {{ devTotal.total }}</th>
+            </tr>
+        </tbody>
     </table>
-    <p> {{  devTotals }}</p>
 </template>
