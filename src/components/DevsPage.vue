@@ -2,6 +2,7 @@
 import { useGlobalStore } from '@/stores/store';
 
 const store = useGlobalStore();
+
 </script>
 
 <template>
@@ -11,7 +12,9 @@ const store = useGlobalStore();
             v-for="username in store.devUsernames"
             class="dev-box"
         >
-            {{ username }}
+            <h3>@{{ username }}</h3>
+            <p class="center" v-if="!store.devInfo[username]">Loading info...</p>
+            <p v-else>{{ store.devInfo[username] }}</p>
         </div>
     </div>
 </template>
@@ -26,5 +29,11 @@ div.dev-box {
     border: 1px solid black;
     height: 12em;
     width: 15em;
+
+    h3 {
+        margin: 0.5em 0;
+        text-align: center;
+        font-size: 1.25em;
+    }
 }
 </style>
