@@ -63,13 +63,10 @@ const getWidth = (total: number): string => {
     return `${ratio.toFixed(2)}%`;
 };
 
-let isLoading = ref(false);
 
 const forceReload = async () => {
-    isLoading.value = true;
     store.devContribs = null;
     store.devContribs = await fetchDevContribs(store.inputDate, store.devsURL, true);
-    isLoading.value = false;
 };
 
 </script>
@@ -118,7 +115,7 @@ const forceReload = async () => {
     </table>
     
     <button 
-        :disabled="isLoading"
+        :class="{hidden: store.devContribs === null}"
         @click="forceReload"
     >
         Force Reload

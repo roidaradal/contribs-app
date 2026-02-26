@@ -12,13 +12,16 @@ const changeTab = (newTab: string) => store.currentTab = newTab;
     >
         Summary
     </button>-->
+    <button
+        :class="{ active: store.currentTab == 'devs'}"
+        @click="changeTab('devs')"
+    >Devs</button>
+    <hr/>
     <button 
         v-for="week of store.weeks"
         :class="{ active : store.currentTab == week.index.toString()}"
         @click="changeTab(week.index.toString())"
-    >
-        {{ week.name }}
-    </button>
+    >{{ week.name }}</button>
     <p v-if="store.isCurrentMonth">
         {{ store.daysLeft }} day{{ store.daysLeft == 1 ? '' : 's' }} left
     </p>
@@ -42,5 +45,8 @@ const changeTab = (newTab: string) => store.currentTab = newTab;
     p {
         margin-top: 1em;
         text-align: center;
+    }
+    hr {
+        margin: 0 1.5em;
     }
 </style>

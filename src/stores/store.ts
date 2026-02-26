@@ -78,7 +78,8 @@ export const useGlobalStore = defineStore('global', () => {
         }
         return -1;
     });
-    const currentTab: Ref<string> = ref(`${currentWeek.value}`);
+    // const currentTab: Ref<string> = ref(`${currentWeek.value}`);
+    const currentTab: Ref<string> = ref('devs');
     const resetCurrentTab = () => currentTab.value = `${currentWeek.value}`;
 
 
@@ -91,10 +92,16 @@ export const useGlobalStore = defineStore('global', () => {
         return devsList.value.join(',')
     });
     const devContribs: Ref<Nullable<DevContribs>> = ref(null);
+    const devUsernames: ComputedRef<string[]> = computed(() => {
+        if(devContribs.value === null) return [];
+        const usernames = Object.keys(devContribs.value.contribs);
+        usernames.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+        return usernames;
+    });
 
     return { 
         inputDate, inputMonth, inputMonthString, monthWeeks, weeks,
         isCurrentMonth, daysLeft, currentTab, resetCurrentTab,
-        devs, devsList, devsURL, devContribs,
+        devs, devsList, devsURL, devContribs, devUsernames,
     }
 })

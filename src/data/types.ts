@@ -21,3 +21,11 @@ export type DevTotal = {
     dev: string, 
     total: number,
 };
+
+export type DevInfo = {
+    avatar_url: string,
+    name: string, 
+    public_repos: number,
+    followers: number, 
+    following: number,
+};
