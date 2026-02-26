@@ -1,4 +1,4 @@
-import type { DevContribs, Nullable, Week } from "@/data/types";
+import type { DevContribs, DevInfo, Nullable, ObjectMap, Week } from "@/data/types";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue"; 
 import type { ComputedRef, Ref } from "vue";
@@ -91,10 +91,17 @@ export const useGlobalStore = defineStore('global', () => {
         return devsList.value.join(',')
     });
     const devContribs: Ref<Nullable<DevContribs>> = ref(null);
+    const devUsernames: ComputedRef<string[]> = computed(() => {
+        if(devContribs.value === null) return [];
+        const usernames = Object.keys(devContribs.value.contribs);
+        usernames.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+        return usernames;
+    });
+    const devInfo: Ref<ObjectMap<Nullable<DevInfo>>> = ref({});
 
     return { 
         inputDate, inputMonth, inputMonthString, monthWeeks, weeks,
         isCurrentMonth, daysLeft, currentTab, resetCurrentTab,
-        devs, devsList, devsURL, devContribs,
+        devs, devsList, devsURL, devContribs, devUsernames, devInfo
     }
 })

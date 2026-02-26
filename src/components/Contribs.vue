@@ -3,6 +3,7 @@ import { useGlobalStore } from '@/stores/store';
 import Sidebar from './Sidebar.vue';
 import SummaryPage from './SummaryPage.vue';
 import WeekPage from './WeekPage.vue';
+import DevsPage from './DevsPage.vue';
 
 const store = useGlobalStore();
 </script>
@@ -13,18 +14,18 @@ const store = useGlobalStore();
         <Sidebar />
     </div>
     <div id="content-box">
-        <h2>{{ store.inputMonthString }} GitHub Contributions</h2>
+        <h2 v-if="store.currentTab != 'devs'">{{ store.inputMonthString }} GitHub Contributions</h2>
+        <h2 v-else>Devs</h2>
         <div
             :class="{ hidden : store.currentTab != 'summary' }"
-        >
-            <SummaryPage />
-        </div>
+        ><SummaryPage /></div>
+        <div
+            :class="{ hidden : store.currentTab != 'devs' }"
+        ><DevsPage /></div>
         <div 
             v-for="week of store.weeks"
             :class="{ hidden : store.currentTab != week.index.toString() }"
-        >
-            <WeekPage :week="week.index" />
-        </div>
+        ><WeekPage :week="week.index" /></div>
     </div>
 </div>
 
