@@ -56,3 +56,7 @@ td.center {
     text-align: center;
     font-weight: bold;
 }
+
+a, a:visited, a:hover, a:active {
+    color: green;
+}

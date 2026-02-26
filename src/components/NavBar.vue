@@ -43,6 +43,7 @@ const changeDate = () => {
 <style lang="scss" scoped>
     #nav-bar {
         background-color: #BEB;
+        height: 100%;
         display: flex;
 
         #title-box {

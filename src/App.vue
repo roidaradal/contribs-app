@@ -27,7 +27,7 @@ onMounted(async () => {
 
 <style scoped>
     header {
-        height: 3em;
+        height: 50px;
     }
     main {
         flex: 1;

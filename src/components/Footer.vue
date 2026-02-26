@@ -13,9 +13,6 @@
         padding: 1em 0 0.5em;
         text-align: center;
         
-        a, a:visited, a:hover, a:active {
-            color: green;
-        }
     }
     img.logo {
         height: 1.5em;

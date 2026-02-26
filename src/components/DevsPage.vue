@@ -12,26 +12,35 @@ const store = useGlobalStore();
             v-for="username in store.devUsernames"
             class="dev-box"
         >
-            <h3>@{{ username }}</h3>
             <p class="center" v-if="!store.devInfo[username]">Loading info...</p>
             <div class="center" v-else>
-                <b>{{ store.devInfo[username].name ? store.devInfo[username].name : '-' }}</b> 
-                <br/>
-                <i>Since: {{ store.devInfo[username].created_at }}</i> 
-                <br/>
+                <div class="dev-header">
+                    <div class="img-box">
+                        <img :src="store.devInfo[username].avatar_url" />
+                    </div>
+                    <div>
+                        <h3 :class="{smaller : username.length > 15}">
+                            <a :href="`https://github.com/${username}`" target="_blank">
+                                @{{ username }}
+                            </a>
+                        </h3>
+                        <b>{{ store.devInfo[username].name ? store.devInfo[username].name : '-' }}</b> 
+                        <span>Since: {{ store.devInfo[username].created_at }}</span>
+                    </div>
+                </div>
                 <div class="count-box">
                     <div class="bordered">
-                        {{ store.devInfo[username].public_repos }} 
+                        <b>{{ store.devInfo[username].public_repos }}</b>
                         <br/>
                         <span class="smaller">Repos</span>
                     </div>
                     <div class="bordered">
-                        {{ store.devInfo[username].followers }}
+                        <b>{{ store.devInfo[username].followers }}</b>
                         <br/>
                         <span class="smaller">Followers</span>
                     </div>
                     <div>
-                        {{ store.devInfo[username].following }}
+                        <b>{{ store.devInfo[username].following }}</b>
                         <br/>
                         <span class="smaller">Following</span>
                     </div>
@@ -55,7 +64,11 @@ div.dev-box {
     h3 {
         margin: 0.5em 0;
         text-align: center;
-        font-size: 1.25em;
+        font-size: 1.1em;
+        color: #196c2e;
+    }
+    h3.smaller {
+        font-size: 0.9em;
     }
 }
 div.count-box {
@@ -65,7 +78,7 @@ div.count-box {
     div {
         flex: 1;
         padding: 0 1em;
-        margin: 1em 0;
+        margin: 0.5em 0;
         text-align: center;
     }
     div.bordered {
@@ -73,6 +86,33 @@ div.count-box {
     }
     span.smaller {
         font-size: 0.75em;
+    }
+}
+div.dev-header {
+    display: flex;
+    justify-content: space-between;
+    
+    div {
+        flex: 1;
+        height: 6em;
+    }
+
+    span {
+        display: block;
+        margin-top: 0.5em;
+        font-size: 0.8em;
+        font-style: italic;
+    }
+
+    div.img-box {
+        flex: 0 0 30%;
+        img {
+            height: 4em;
+            margin: 1em 0;
+            margin-left: 0.5em;
+            border-radius: 2em;
+            border: 1px solid black;
+        }
     }
 }
 </style>

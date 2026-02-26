@@ -78,8 +78,7 @@ export const useGlobalStore = defineStore('global', () => {
         }
         return -1;
     });
-    // const currentTab: Ref<string> = ref(`${currentWeek.value}`);
-    const currentTab: Ref<string> = ref('devs');
+    const currentTab: Ref<string> = ref(`${currentWeek.value}`);
     const resetCurrentTab = () => currentTab.value = `${currentWeek.value}`;
 
 
