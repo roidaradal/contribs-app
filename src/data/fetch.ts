@@ -17,7 +17,7 @@ export const fetchDevInfo = async (username: string): Promise<DevInfo> => {
         public_repos: raw.public_repos,
         followers: raw.followers, 
         following: raw.following, 
-        created_at: raw.created_at,
+        created_at: raw.created_at.slice(0, 10),
     };
 };
 
